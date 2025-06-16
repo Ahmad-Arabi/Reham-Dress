@@ -447,7 +447,7 @@
                 🐻
             </div>
             <h1 class="main-title">أنشئ حسابك</h1>
-            <p class="subtitle">انضمي إلى عالم HugsyWugsy الساحر 💫</p>
+            <p class="subtitle">انضمي إلى عالم Reham Dress الساحر 💫</p>
         </div>
 
         <!-- Register Card -->
@@ -519,7 +519,7 @@
 
         <!-- Footer -->
         <div class="footer-section">
-            <p class="footer-main">💕 أهلاً بك في HugsyWugsy!</p>
+            <p class="footer-main">💕 أهلاً بك في Reham dress!</p>
             <p class="footer-sub">اللطافة والراحة والإبداع كلها في حساب واحد 🧸</p>
         </div>
     </div>
