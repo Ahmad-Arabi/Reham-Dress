@@ -1,3 +1,4 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
 /* Cart Page Styles */
 header {
     position: sticky;
@@ -7,14 +8,14 @@ header {
 
 
 .cart-page {
-    background-color: var(--background);
+    background-color: #f9fafb;
     min-height: 90vh;
 }
 
 .cart-title {
     font-size: 28px;
     font-weight: 600;
-    color: var(--dark);
+    color: var(--text-color);
     margin-bottom: 20px;
 }
 
@@ -29,7 +30,7 @@ header {
 
 .cart-table th {
     font-weight: 600;
-    color: #444;
+    color: #db2777;
     padding: 12px 15px;
 }
 
@@ -39,7 +40,7 @@ header {
 }
 
 .shopping-cart {
-    color:  rgba(255, 107, 107, 0.5) !important;
+    color:  #db2777 !important;
 }
 
 /* Product Column */
@@ -101,14 +102,23 @@ header {
 .btn-qty {
     width: 32px;
     height: 32px;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
+    background-color: #f9fafb;
+    border: 1px solid #db2777;
+    color: #db2777;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     cursor: pointer;
     user-select: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-qty:hover {
+    background-color: #db2777;
+    border: 1px solid #db2777;
+    color: white;
+    transition: background 0.2s, color 0.2s;
 }
 
 .btn-qty.decrease {
@@ -147,7 +157,7 @@ header {
 }
 
 .subtotal {
-    color: var(--accent);
+    color: #db2777;
     font-weight: 600;
 }
 
@@ -183,7 +193,7 @@ tfoot td {
 
 .cart-total {
     font-size: 18px;
-    color: var(--accent);
+    color: #db2777;
 }
 
 /* Cart Actions */
@@ -194,12 +204,23 @@ tfoot td {
 .checkout-btn {
     padding: 12px 25px;
     font-size: 16px;
-    background-color: var(--accent);
-    border-color: var(--accent);
+    background-color: #db2777 !important;
+    border-color: #db2777 !important;
+    color: #fff !important;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    box-shadow: none !important;
 }
 
-.checkout-btn:hover {
-    background-color: var(--accent-dark, #e06000);
+.checkout-btn:hover,
+.checkout-btn:focus,
+.checkout-btn:active {
+    background-color: #be185d !important;
+    border-color: #be185d !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    outline: none !important;
 }
 
 /* Empty Cart */
@@ -292,6 +313,10 @@ tfoot td {
     background: #e0e0e0;
     border: none;
     color: #666;
+}
+
+.btn-secondary:hover {
+    color: var(--text-color);
 }
 
 /* Responsive Cart Table */
@@ -391,11 +416,39 @@ tfoot td {
     }
 }
 
-.cancel-btn {
-    background-color: var(--primary);
-    border-color: var(--primary);
+.btn,
+.btn-qty,
+.checkout-btn,
+.cancel-btn,
+.btn-remove,
+.cart-actions .btn,
+.modal-confirm .btn-danger,
+.modal-confirm .btn-secondary {
+    box-shadow: none !important;
 }
-.cancel-btn:hover, .cancel-btn:focus {
-    background-color: var(--accent) !important;
-    border-color: var(--accent) !important;
+
+.qty-input:focus-visible {
+    outline-color: #db2777;
+    outline-offset: -0.5px;
+    outline-style: groove;
+}
+
+.btn:focus,z
+.btn:active,
+.btn-qty:focus,
+.btn-qty:active,
+.checkout-btn:focus,
+.checkout-btn:active,
+.cancel-btn:focus,
+.cancel-btn:active,
+.btn-remove:focus,
+.btn-remove:active,
+.cart-actions .btn:focus,
+.cart-actions .btn:active,
+.modal-confirm .btn-danger:focus,
+.modal-confirm .btn-danger:active,
+.modal-confirm .btn-secondary:focus,
+.modal-confirm .btn-secondary:active {
+    box-shadow: none !important;
+    outline: none !important;
 }

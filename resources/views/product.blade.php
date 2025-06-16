@@ -14,8 +14,6 @@
         @endif
         <div style="max-width: 600px; margin: 2rem auto; border: 1px solid #eee; border-radius: 8px; padding: 2rem;">
             <h2>{{ $product->name }}</h2>
-            <h2>{{ $product->id }}</h2>
-            <h2>{{ $product->stock }}</h2>
             <img src="{{ $product->thumbnail ? asset('storage/products/thumbnails/' . $product->id . '/' . $product->thumbnail) : asset('images/fallback.jpg')}}" class="w-25">
 
             <p>{{ $product->description }}</p>

@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('page_title', 'سلتي')
+@section('page_title', 'سلة التسوق')
 @section('content')
     <div class="cart-page">
         <div class="container py-5 mt-3 mb-5">
-            <h1 class="cart-title mb-4">سلتي</h1>
+            <h1 class="cart-title mb-4">محتويات السلة</h1>
             
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
@@ -29,9 +29,9 @@
             @if(count($cartItems) > 0)
                 <div class="cart-container">
                     <div class="checkout-section d-md-none mb-3">
-                        {{-- <a href="{{ route('checkout') }}" class="btn btn-primary btn-lg checkout-btn">
-                            Proceed to Checkout <i class="fa fa-arrow-right ms-2"></i>
-                        </a> --}}
+                        <a href="" class="btn btn-primary btn-lg checkout-btn">
+                            المتابعة إلى الدفع <i class="fa fa-arrow-left ms-2"></i>
+                        </a>
                     </div>
                     <!-- Cart items for desktop -->
                     <div class="card shadow-sm d-none d-md-block">
@@ -40,12 +40,13 @@
                                 <table class="table table-hover cart-table mb-0 cart-background">
                                     <thead class="thead">
                                         <tr>
-                                            <th class="product-col">Product</th>
-                                            <th>Size</th>
-                                            <th>Color</th>
-                                            <th class="price-col">Price</th>
-                                            <th class="quantity-col">Quantity</th>
-                                            <th class="subtotal-col">Subtotal</th>
+                                            <th class="product-col"></th>
+                                            <th class="product-col">المنتج</th>
+                                            <th>المقاس</th>
+                                            <th>اللون</th>
+                                            <th class="price-col">السعر</th>
+                                            <th class="quantity-col">الكمية</th>
+                                            <th class="subtotal-col">المجموع</th>
                                             <th class="action-col"></th>
                                         </tr>
                                     </thead>
@@ -54,38 +55,36 @@
                                             <tr class="cart-item cart-background" data-id="{{ $item['id'] }}">
                                                 <td class="product-col">
                                                     <div class="d-flex align-items-center">
-                                                        {{-- <img src="{{ asset(Str::startsWith($item['image'], 'images/') ? $item['image'] : 'storage/' . $item['image']) }}" 
-                                                             alt="{{ $item['name'] }}" class="cart-product-image"> --}}
-                                                        <div class="product-info ms-3">
-                                                            <h5 class="product-name">{{ $item['name'] }}</h5>
-                                                        </div>
+                                                        <img src="{{ asset(Str::startsWith($item['image'], 'images/') ? $item['image'] : 'storage/products/thumbnails/' . $item['product_id'] . '/' . $item['image']) }}" 
+                                                             alt="{{ $item['name'] }}" class="cart-product-image">
+                                        
                                                     </div>
                                                 </td>
+                                                <td>{{ $item['name'] }}</td>
                                                 <td>{{ $item['size'] }}</td>
                                                 <td>
                                                     @if($item['color'])
                                                         <div class="product-color d-flex align-items-center">
-                                                            <p style="color:{{ $item['color'] }};">{{ $item['color'] }}</p>
                                                             <span class="color-dot" style="background-color: {{ $item['color'] }}"></span>
                                                         </div>
                                                     @else
                                                         <span class="text-muted">N/A</span>
                                                     @endif
                                                 </td>
-                                                <td class="price-col">{{ $item['price'] }} JOD</td>
+                                                <td class="price-col">{{ $item['price'] }} دينار</td>
                                                 <td class="quantity-col">
                                                     <div class="quantity-control">
-                                                        <button type="button" class="btn-qty decrease">-</button>
+                                                        <button type="button" class="btn-qty increase" data-item-id="{{ $item['id'] }}" data-item-name="{{ $item['name'] }}">-</button>
                                                         <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1" class="qty-input" data-id="{{ $item['id'] }}">
-                                                        <button type="button" class="btn-qty increase">+</button>
+                                                        <button type="button" class="btn-qty decrease">+</button>
                                                     </div>
                                                 </td>
                                                 <td class="subtotal-col">
-                                                    <span class="subtotal" data-id="{{ $item['id'] }}">{{ number_format($item['subtotal'], 2) }}</span> JOD
+                                                    <span class="subtotal" data-id="{{ $item['id'] }}">{{ number_format($item['subtotal'], 2) }}</span> دينار
                                                 </td>
                                                 <td class="action-col">
                                                     <button type="button" class="btn-remove border-0 bg-transparent p-0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-item-id="{{ $item['id'] }}" data-item-name="{{ $item['name'] }}">
-                                                        <i class="fa fa-trash-o text-danger"></i>
+                                                        <i class="bi bi-trash-fill"></i>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -95,7 +94,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Mobile cart items view -->
                     <div class="d-md-none mobile-cart">
                         @foreach($cartItems as $item)
@@ -104,22 +103,22 @@
                                     <div class="d-flex justify-content-between mb-2">
                                         <h5 class="card-title product-name mb-0">{{ $item['name'] }}</h5>
                                         <button type="button" class="btn-remove border-0 bg-transparent p-0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-item-id="{{ $item['id'] }}" data-item-name="{{ $item['name'] }}">
-                                            <i class="fa fa-trash-o text-danger"></i>
+                                            <i class="bi bi-trash-fill"></i>
                                         </button>
                                     </div>
                                     
                                     <div class="row mb-3">
                                         <div class="col-4">
-                                            <img src="{{ asset(Str::startsWith($item['image'], 'images/') ? $item['image'] : 'storage/' . $item['image']) }}" 
+                                            <img src="{{ asset(Str::startsWith($item['image'], 'images/') ? $item['image'] : 'storage/products/thumbnails/' . $item['product_id'] . '/' . $item['image']) }}" 
                                                 alt="{{ $item['name'] }}" class="img-fluid rounded">
                                         </div>
                                         <div class="col-8">
                                             <div class="specs">
-                                                <p class="mb-1"><strong>Size:</strong> {{ $item['size'] }}</p>
+                                                <p class="mb-1"><strong>المقاس:</strong> {{ $item['size'] }}</p>
                                                 
                                                 @if($item['color'])
                                                 <p class="mb-1 d-flex align-items-center">
-                                                    <strong>Color:</strong>&nbsp;
+                                                    <strong>اللون:</strong>&nbsp;
                                                     <span class="color-dot ms-1" style="background-color: {{ $item['color'] }}"></span>
                                                 </p>
                                                 @endif
@@ -130,14 +129,14 @@
                                     
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="price-wrap">
-                                            <p class="mb-0"><strong>Price:</strong> {{ $item['price'] }} JOD</p>
-                                            <p class="mb-0"><strong>Subtotal:</strong> <span class="subtotal" data-id="{{ $item['id'] }}">{{ $item['subtotal'] }}</span> JOD</p>
+                                            <p class="mb-0"><strong>السعر:</strong> {{ $item['price'] }} دينار</p>
+                                            <p class="mb-0"><strong>المجموع:</strong> <span class="subtotal" data-id="{{ $item['id'] }}">{{ $item['subtotal'] }}</span> دينار</p>
                                         </div>
                                         
                                         <div class="quantity-control compact">
-                                            <button type="button" class="btn-qty decrease">-</button>
+                                            <button type="button" class="btn-qty increase">-</button>
                                             <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1" class="qty-input" data-id="{{ $item['id'] }}">
-                                            <button type="button" class="btn-qty increase">+</button>
+                                            <button type="button" class="btn-qty decrease">+</button>
                                         </div>
                                     </div>
                                 </div>
@@ -151,10 +150,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="cart-summary">
-                                        <h5>Cart Summary</h5>
+                                        <h5>ملخص السلة</h5>
                                         <div class="d-flex justify-content-between">
-                                            <span>Total:</span>
-                                            <strong class="cart-total">{{ number_format($totalPrice, 2) }} JOD</strong>
+                                            <span>المجموع الكلي :</span>
+                                            <strong class="cart-total">{{ number_format($totalPrice, 2) }} دينار</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -164,24 +163,24 @@
                     
                     <!-- Cart actions -->
                     <div class="cart-actions d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mt-4">
-                        <div class="action-buttons mb-3 mb-md-0 d-flex justify-content-between w-100 gap-4 d-md-block">
+                        <div class="action-buttons mb-3 mb-md-0 d-flex w-100 justify-content-between gap-2 d-md-row">
                             <a href="" class="btn btn-outline-secondary">
-                                <i class="fa fa-arrow-left me-2"></i> Continue Shopping
+                                متابعة التسوق
                             </a>
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#clearCartModal">
-                                <i class="fa fa-trash-o me-2"></i> Clear Cart
+                                <i class="fa fa-trash-o me-2 "></i> إفراغ السلة
                             </button>
                         </div>
                         
                         <div class="checkout-section d-none d-md-flex">
                             <a href="" class="btn btn-primary btn-lg checkout-btn">
-                                Proceed to Checkout <i class="fa fa-arrow-right ms-2"></i>
+                                المتابعة إلى الدفع <i class="fa fa-arrow-left ms-2"></i>
                             </a>
                         </div>
                     </div>
                     <div class="checkout-section d-md-none">
                         <a href="" class="btn btn-primary btn-lg checkout-btn">
-                            Proceed to Checkout <i class="fa fa-arrow-right ms-2"></i>
+                            المتابعة إلى الدفع <i class="fa fa-arrow-left ms-2"></i>
                         </a>
                     </div>
                 </div>
@@ -190,10 +189,10 @@
                     <div class="empty-cart-icon mb-3">
                         <i class="fa fa-shopping-cart fa-3x text-muted shopping-cart"></i>
                     </div>
-                    <h3 class="mb-3">Your cart is empty</h3>
-                    <p class="mb-4">Looks like you haven't added any products to your cart yet.</p>
+                    <h3 class="mb-3">سلة المنتجات فارغة</h3>
+                    <p class="mb-4">يبدو أنك لم تقم بإضافة أي منتجات بعد.</p>
                     <a href="" class="btn btn-primary cancel-btn">
-                        <i class="fa fa-arrow-left me-2"></i> Start Shopping
+                        <i class="fa fa-arrow-left me-2"></i>  بدء التسوق
                     </a>
                 </div>
             @endif
@@ -205,15 +204,15 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Remove Item</h5>
+                    <h5 class="modal-title" id="deleteModalLabel">تأكيد إزالة المنتج من السلة</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to remove <span id="delete-item-name"></span> from your cart?
+                    هل أنت متأكد أنك تريد إزالة <span id="delete-item-name"></span> من سلة التسوق الخاصة بك؟
                 </div>
                 <div class="modal-footer">
-                    <a href="#" id="confirm-delete" class="btn btn-danger remove-btn">Remove</a>
-                    <button type="button" class="btn btn-secondary cancel-btn" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary cancel-btn" data-bs-dismiss="modal">إلغاء</button>
+                    <a href="#" id="confirm-delete" class="btn btn-danger remove-btn">تأكيد</a>
                 </div>
             </div>
         </div>
@@ -224,15 +223,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="clearCartModalLabel">Clear Cart</h5>
+                    <h5 class="modal-title" id="clearCartModalLabel">إفراغ السلة</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to clear your entire cart? This action cannot be undone.
+                    هل أنت متأكد أنك تريد إفراغ سلة التسوق بالكامل؟ 
+                    <p class="text-danger">لا يمكن التراجع عن هذا الإجراء.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="{{ route('cart.clear') }}" class="btn btn-danger">Clear Cart</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <a href="{{ route('cart.clear') }}" class="btn btn-danger">تأكيد</a>
                 </div>
             </div>
         </div>
@@ -244,21 +244,24 @@
     @endpush
     
     @push('scripts')
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script>
             $(document).ready(function() {
                 // Delete modal
-                $('#deleteModal').on('show.bs.modal', function (event) {
-                    const button = $(event.relatedTarget);
-                    const itemId = button.data('item-id');
-                    const itemName = button.data('item-name');
-                    
-                    const modal = $(this);
-                    modal.find('#delete-item-name').text(itemName);
-                    modal.find('#confirm-delete').attr('href', '{{ route("cart.remove", "") }}/' + itemId);
-                });
+                    $('#deleteModal').on('show.bs.modal', function (event) {
+                        const button = $(event.relatedTarget);
+                        const itemId = button.data('item-id');
+                        const itemName = button.data('item-name');
+                                              
+                        const modal = $(this);
+                        modal.find('#delete-item-name').text(itemName);
+                        modal.find('#confirm-delete').attr('href', '{{ route("cart.remove", "") }}/' + itemId);
+                    });
                 
+                    
                 // Quantity increase/decrease
-                $('.btn-qty.decrease').click(function() {
+                $('.btn-qty.increase').click(function() {
                     const input = $(this).siblings('.qty-input');
                     let value = parseInt(input.val());
                     if (value > 1) {
@@ -267,7 +270,7 @@
                     }
                 });
                 
-                $('.btn-qty.increase').click(function() {
+                $('.btn-qty.decrease').click(function() {
                     const input = $(this).siblings('.qty-input');
                     let value = parseInt(input.val());
                     input.val(value + 1);
@@ -294,7 +297,7 @@
                             if (response.success) {
                                 // Update all instances of this item's subtotal
                                 $(`span.subtotal[data-id="${itemId}"]`).text(response.subtotal);
-                                $('.cart-total').text(response.total + ' JOD');
+                                $('.cart-total').text(response.total + ' دينار');
                             } else {
                                 // Show error and reset to available quantity
                                 alert(response.message);

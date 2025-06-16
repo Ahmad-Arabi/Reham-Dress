@@ -69,7 +69,7 @@ class CartController extends Controller
         // Check if user is logged in
         if (!Auth::check()) {
             return redirect()->route('login')
-                ->with('error', 'Please login to view your cart');
+                ->with('error', 'يرجى تسجيل الدخول لكي تتمكن من عرض السلة الخاصة بك');
         }
         
         $cartItems = $this->getUserCartItems();
@@ -183,15 +183,15 @@ class CartController extends Controller
             }
             
             // Get product size to check stock
-            $productSize = Size::find($userCartItems[$request->item_id]['size_id']);
+            // $productSize = Size::find($userCartItems[$request->item_id]['size_id']);
             
-            if ($productSize && $request->quantity > $productSize->stock) {
-                return response()->json([
-                    'success' => false, 
-                    'message' => 'Not enough stock available',
-                    'available' => $productSize->stock
-                ]);
-            }
+            // if ($productSize && $request->quantity > $productSize->stock) {
+            //     return response()->json([
+            //         'success' => false, 
+            //         'message' => 'Not enough stock available',
+            //         'available' => $productSize->stock
+            //     ]);
+            // }
             
             // Update quantity and subtotal
             $userCartItems[$request->item_id]['quantity'] = $request->quantity;
@@ -208,7 +208,7 @@ class CartController extends Controller
             ]);
         }
         
-        return response()->json(['success' => false, 'message' => 'Item not found']);
+        return response()->json(['success' => false, 'message' => 'لم يتم العثور على المنتج المطلوب']);
     }
 
     /**
@@ -219,11 +219,11 @@ class CartController extends Controller
         // Check if user is logged in
         if (!Auth::check()) {
             return redirect()->route('login')
-                ->with('error', 'Please login to manage your cart');
+                ->with('error', 'يرجى تسجيل الدخول لكي تتمكن من تعديل السلة');
         }
         
         $userCartItems = $this->getUserCartItems();
-        
+
         if (isset($userCartItems[$itemId])) {
             // Verify this item belongs to the current user
             if ($userCartItems[$itemId]['user_id'] != Auth::id()) {
@@ -233,10 +233,10 @@ class CartController extends Controller
             unset($userCartItems[$itemId]);
             $this->saveCartToCookie($userCartItems);
             
-            return redirect()->route('cart.index')->with('success', 'Item removed from cart successfully!');
+            return redirect()->route('cart.index')->with('success', 'تمت إزالة المنتج من سلة التسوق بنجاح!');
         }
         
-        return redirect()->route('cart.index')->with('error', 'Item not found in cart');
+        return redirect()->route('cart.index')->with('error', 'لم يتم العثور على المنتج في سلة التسوق');
     }
     
     /**
@@ -247,13 +247,13 @@ class CartController extends Controller
         // Check if user is logged in
         if (!Auth::check()) {
             return redirect()->route('login')
-                ->with('error', 'Please login to manage your cart');
+                ->with('error', 'يرجى تسجيل الدخول لكي تتمكن من عرض السلة');
         }
         
         // Clear only current user's cart items
         $this->saveCartToCookie([]);
         
-        return redirect()->route('cart.index')->with('success', 'Cart cleared successfully!');
+        return redirect()->route('cart.index')->with('success', 'تم إفراغ السلة بنجاح!');
     }
     
     /**
