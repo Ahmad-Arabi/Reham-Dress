@@ -58,6 +58,7 @@ class CartController extends Controller
         
         // Save back to cookie
         Cookie::queue('cart', json_encode($allCartItems), $this->cookieExpiraton);
+        
     }
     
     /**
@@ -73,8 +74,7 @@ class CartController extends Controller
         
         $cartItems = $this->getUserCartItems();
         $totalPrice = $this->calculateTotal($cartItems);
-        
-        return view('userside.cart', compact('cartItems', 'totalPrice'));
+        return view('user.cart', compact('cartItems', 'totalPrice'));
     }
 
     /**
@@ -87,26 +87,30 @@ class CartController extends Controller
             return redirect()->route('login')
                 ->with('error', 'يرجى تسجيل الدخول لكي تتمكن من إضافة المنتج إلى السلة');
         }
-        
+
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'stock' => 'required|integer|min:1',
+            'quantity' => 'required|integer|min:1',
             'size' => 'required|exists:sizes,id',
+            'color' => 'required|exists:colors,id',
+
         ]);
+
+            
         
         try {
             // Get product
             $product = Product::findOrFail($request->product_id);
-            $productSize = Size::findOrFail($request->age);
+            $productSize = Size::findOrFail($request->size);
             $productColor = Color::findOrFail($request->color);
-            
+
             // Check if product is active
-            if (!$product->isActive) {
-                return back()->with('error', 'المنتج غير متوفر حالياً');
-            }
+            // if (!$product->isActive) {
+            //     return back()->with('error', 'المنتج غير متوفر حالياً');
+            // }
             
             // Check stock availability
-            if ($productSize->age < $request->quantity) {
+            if ($product->stock < $request->quantity) {
                 return back()->with('error', 'المخزون غير كافٍ للمقاس المختار');
             }
             
@@ -126,7 +130,7 @@ class CartController extends Controller
                 'size' => $productSize->age,
                 'color_id' => $productColor->id ?? null,
                 'color' => $productColor->color ?? null,
-                // 'image' => $product->thumbnail ?? 'images/fallback.jpg',
+                'image' => $product->thumbnail ?? 'images/fallback.jpg',
                 'subtotal' => $product->price * $request->quantity,
             ];
             
@@ -141,16 +145,17 @@ class CartController extends Controller
             
             Log::info('Item added to cart', ['user' => Auth::id(), 'product' => $product->id]);
             
-            if($request->action_type == "buyNow") {
-                return redirect()->route('checkout');
-            } else {
+            // if($request->action_type == "buyNow") {
+            //     return redirect()->route('checkout');
+            // } else {
 
-                return redirect()->back()->with('success', 'تم إضافة المنتح إلى السلة');
-            }
+            //     return redirect()->back()->with('success', 'تم إضافة المنتح إلى السلة');
+            // }
+            return redirect()->back()->with('success', 'تم إضافة المنتح إلى السلة');
             
         } catch (\Exception $e) {
             Log::error('Error adding item to cart: ' . $e->getMessage());
-            return back()->with('error', 'يرجى التأكد من تحديد الخيارات المطلوبة.');
+            return redirect()->back()->with('error', 'يرجى التأكد من تحديد الخيارات المطلوبة.');
         }
     }
 

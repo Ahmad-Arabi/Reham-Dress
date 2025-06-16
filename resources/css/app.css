@@ -178,7 +178,7 @@ h1, h2, h3, h4 {
     justify-content: center;
     align-items: center;
     position: relative;
-    background-image: url('/images/hero.jpg');
+    background-image: url('/public/images/hero.jpg');
 }
 .hero-section::before {
     content: '';
@@ -651,7 +651,7 @@ h1, h2, h3, h4 {
   padding-bottom: 8rem;
   text-align: center;
   color: #fff;
-  background-image: url('/images/hero.jpg');
+  background-image: url('/public/images/hero.jpg');
 }
 .hero-section::before {
   content: '';
@@ -2249,7 +2249,7 @@ h1, h2, h3, h4 {
 .main-background {
   position: relative;
   min-height: 100vh;
-    background-image: url('/images/eeeeeee.jpg');
+    background-image: url('/public/images/eeeeeee.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
