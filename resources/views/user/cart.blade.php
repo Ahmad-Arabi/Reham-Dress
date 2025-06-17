@@ -29,7 +29,7 @@
             @if(count($cartItems) > 0)
                 <div class="cart-container">
                     <div class="checkout-section d-md-none mb-3">
-                        <a href="" class="btn btn-primary btn-lg checkout-btn">
+                        <a href="{{ route('checkout')}}" class="btn btn-primary btn-lg checkout-btn">
                             المتابعة إلى الدفع <i class="fa fa-arrow-left ms-2"></i>
                         </a>
                     </div>
@@ -173,13 +173,13 @@
                         </div>
                         
                         <div class="checkout-section d-none d-md-flex">
-                            <a href="" class="btn btn-primary btn-lg checkout-btn">
+                            <a href="{{ route('checkout')}}" class="btn btn-primary btn-lg checkout-btn">
                                 المتابعة إلى الدفع <i class="fa fa-arrow-left ms-2"></i>
                             </a>
                         </div>
                     </div>
                     <div class="checkout-section d-md-none">
-                        <a href="" class="btn btn-primary btn-lg checkout-btn">
+                        <a href="{{ route('checkout')}}" class="btn btn-primary btn-lg checkout-btn">
                             المتابعة إلى الدفع <i class="fa fa-arrow-left ms-2"></i>
                         </a>
                     </div>

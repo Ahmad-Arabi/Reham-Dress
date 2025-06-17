@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('discount_amount', 10, 2)->nullable();
             $table->unsignedBigInteger('coupon_id')->nullable();
             $table->enum('status', ['pending', 'processing', 'shipped', 'delivered', 'cancelled']);
+            $table->enum('payment_method', ['COD', 'credi_card']);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
