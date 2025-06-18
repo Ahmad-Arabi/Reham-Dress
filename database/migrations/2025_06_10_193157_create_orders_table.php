@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('coupon_id')->nullable();
             $table->enum('status', ['pending', 'processing', 'shipped', 'delivered', 'cancelled']);
             $table->enum('payment_method', ['COD', 'credi_card']);
+            $table->decimal('shipping_fee', 10,2)->default('3');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

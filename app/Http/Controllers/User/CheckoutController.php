@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Validator;
 class CheckoutController extends Controller
 {
 
+    protected $shippingFees = 3.00; // Default shipping fees
+
     private function getUserCartItems()
     {
         $cartJson = Cookie::get('cart', json_encode([]));
@@ -70,15 +72,9 @@ class CheckoutController extends Controller
         $appliedCoupon = session('checkout.coupon');
         $totalPrice = $subtotal - $discount;
 
-        $shippingFees = 3.00;
+        $shippingFees = $this->shippingFees;
         $totalPrice += $shippingFees;
 
-        // if ($totalPrice < 50) {
-        //     $shippingFees = 5.00;
-        //     $totalPrice += $shippingFees;
-        // } else {
-        //     $shippingFees = "Free";
-        // }
         
         return view('user.checkout', compact(
             'cartItems', 
@@ -165,7 +161,7 @@ class CheckoutController extends Controller
             return redirect()->route('login')
                 ->with('error', 'يرجى تسجيل الدخول لإتمام الطلب');
         }
-        
+
         $validator = Validator::make($request->all(), [
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:10',
@@ -199,15 +195,9 @@ class CheckoutController extends Controller
         $appliedCoupon = session('checkout.coupon');
         $totalPrice = $subtotal - $discount;
 
-        $shippingFees = 3.00;
+        $shippingFees = $this->shippingFees;
         $totalPrice += $shippingFees;
 
-        // if ($totalPrice < 50) {
-        //     $shippingFees = 5.00;
-        //     $totalPrice += $shippingFees;
-        // } else {
-        //     $shippingFees = "Free";
-        // }
         
 
         try {

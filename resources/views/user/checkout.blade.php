@@ -69,12 +69,12 @@
                                             <div class="mb-3">
                                                 <label for="delivery_address" class="form-label">عنوان التوصيل</label>
                                                 <input type="text" class="form-control" id="delivery_address" name="address"
-                                                    value="{{ old('delivery_address') }}">
+                                                    value="{{ $user->address  }}">
                                             </div>
                                             <div class="mb-5">
                                                 <label for="phone" class="form-label">رقم الهاتف</label>
                                                 <input type="text" class="form-control" id="phone_number" name="phone"
-                                                    value="{{ old('phone_number') }}">
+                                                    value="{{ $user->phone  }}">
                                             </div>
                                         </div>
                                     </div>

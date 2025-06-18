@@ -97,14 +97,14 @@
                                     <tfoot>
                                         <tr>
                                             <td colspan="4" class="text-end"><strong>المبلغ الإجمالي:</strong></td>
-                                            <td>{{  $order->total_amount + $order->discount_amount - $shippingFees  }}
+                                            <td>{{  $order->total_amount + $order->discount_amount - $order->shipping_fee  }}
                                                 دينار</td>
                                         </tr>
                                         <tr>
                                             <td colspan="4" class="text-end"><strong>رسوم الشحن:</strong></td>
                                             <td>
 
-                                                    {{ number_format($shippingFees, 2) . ' دينار' }}
+                                                    {{ number_format($order->shipping_fee, 2) . ' دينار' }}
                                
                                             </td>
                                         </tr>

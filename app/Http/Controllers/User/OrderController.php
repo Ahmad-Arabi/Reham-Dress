@@ -22,8 +22,6 @@ class OrderController extends Controller
         // Load order items and related products
         $order->load('orderItems.product');
 
-        $shippingFees = 3.00;
-
         if ($order->status == 'pending') {
             $order->status = 'قيد الانتظار';
         } elseif ($order->status == 'قيد المعالجة') {
@@ -37,7 +35,7 @@ class OrderController extends Controller
         }
 
 
-        return view('user.order-confirmation', compact('order', 'shippingFees'));
+        return view('user.order-confirmation', compact('order'));
     }
     
     /**
