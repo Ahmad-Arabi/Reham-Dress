@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\User\CheckoutController;
 
 Route::get('/', function () {
@@ -44,5 +45,13 @@ Route::middleware('auth')->group(function () {
     // Order Routes
     Route::get('/order/confirmation/{order}', [OrderController::class, 'confirmation'])->name('order.confirmation');
 });
+
+Route::get('/admin/coupons', [CouponController::class, 'index'])->name('admin.coupons.index');
+Route::get('/admin/coupons/create', [CouponController::class, 'create'])->name('admin.coupons.create');
+Route::post('/admin/coupons', [CouponController::class, 'store'])->name('admin.coupons.store');
+Route::get('/admin/coupons/{id}/edit', [CouponController::class, 'edit'])->name('admin.coupons.edit');
+Route::put('/admin/coupons/{id}', [CouponController::class, 'update'])->name('admin.coupons.update');
+Route::get('/admin/cpupons/delete/{id}', [CouponController::class, 'delete'])->name('admin.coupons.delete');
+Route::delete('/admin/coupons/{id}', [CouponController::class, 'destroy'])->name('admin.coupons.destroy');
 
 require __DIR__.'/auth.php';
