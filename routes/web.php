@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\User\CheckoutController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('user.welcome');
 })->name('home');
 
 Route::get('/dashboard', function () {
@@ -55,8 +55,8 @@ Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
     Route::put('/coupons/{id}', [CouponController::class, 'update'])->name('admin.coupons.update');
     Route::get('/cpupons/delete/{id}', [CouponController::class, 'delete'])->name('admin.coupons.delete');
     Route::delete('/coupons/{id}', [CouponController::class, 'destroy'])->name('admin.coupons.destroy'); 
+    
 });
-
 
 
 require __DIR__.'/auth.php';

@@ -34,6 +34,12 @@ class RegisteredUserController extends Controller
             'phone' => ['required', 'string', 'max:10'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'name.required' => 'يرجى إدخال اسم المستخدم',
+            'phone.required' => 'يرجى إدخال رقم الهاتف',
+            'email.required' => 'يرجى إدخال البريد الإلكتروني',
+            'password.required' => 'يرجى إدخال كلمة المرور',
+            'password.confirmed' => 'تأكيد كلمة المرور غير متطابق',
         ]);
 
         $user = User::create([
