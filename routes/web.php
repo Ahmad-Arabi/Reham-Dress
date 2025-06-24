@@ -10,7 +10,7 @@ use App\Http\Controllers\User\CheckoutController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -46,12 +46,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/order/confirmation/{order}', [OrderController::class, 'confirmation'])->name('order.confirmation');
 });
 
-Route::get('/admin/coupons', [CouponController::class, 'index'])->name('admin.coupons.index');
-Route::get('/admin/coupons/create', [CouponController::class, 'create'])->name('admin.coupons.create');
-Route::post('/admin/coupons', [CouponController::class, 'store'])->name('admin.coupons.store');
-Route::get('/admin/coupons/{id}/edit', [CouponController::class, 'edit'])->name('admin.coupons.edit');
-Route::put('/admin/coupons/{id}', [CouponController::class, 'update'])->name('admin.coupons.update');
-Route::get('/admin/cpupons/delete/{id}', [CouponController::class, 'delete'])->name('admin.coupons.delete');
-Route::delete('/admin/coupons/{id}', [CouponController::class, 'destroy'])->name('admin.coupons.destroy');
+Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
+    //Coupons CRUD
+    Route::get('/coupons', [CouponController::class, 'index'])->name('admin.coupons.index');
+    Route::get('/coupons/create', [CouponController::class, 'create'])->name('admin.coupons.create');
+    Route::post('/coupons', [CouponController::class, 'store'])->name('admin.coupons.store');
+    Route::get('/coupons/{id}/edit', [CouponController::class, 'edit'])->name('admin.coupons.edit');
+    Route::put('/coupons/{id}', [CouponController::class, 'update'])->name('admin.coupons.update');
+    Route::get('/cpupons/delete/{id}', [CouponController::class, 'delete'])->name('admin.coupons.delete');
+    Route::delete('/coupons/{id}', [CouponController::class, 'destroy'])->name('admin.coupons.destroy'); 
+});
+
+
 
 require __DIR__.'/auth.php';

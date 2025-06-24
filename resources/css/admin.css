@@ -3,7 +3,7 @@ body {
     font-family: 'Cairo', sans-serif;
     background-color: #f8fafc;
     color: #22223b;
-    margin-right: 260px;
+
 }
 
 :root {
@@ -18,13 +18,13 @@ body {
     border-left: 1px solid #e5e7eb;
     min-height: 100vh;
     max-height: 100vh;
-    position: fixed;
+    position: sticky;
     top: 0;
-    right: 0;
     width: 260px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.03);
     z-index: 1040;
     overflow-y: auto;
+    
 }
 
 
