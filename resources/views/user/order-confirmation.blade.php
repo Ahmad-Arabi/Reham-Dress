@@ -55,6 +55,10 @@
                                     <h6 class="text-muted mb-2">معلومات الشحن</h6>
                                     <p class="mb-1"><strong>العنوان:</strong> {{ $order->address }}</p>
                                     <p class="mb-0"><strong>الهاتف:</strong> {{ $order->phone }}</p>
+                                    @if ( $order->tracking != null)
+                                        
+                                    <p class="mb-0"><strong>رقم التتبع:</strong> {{ $order->tracking }}</p>
+                                    @endif
                                 </div>
                             </div>
 

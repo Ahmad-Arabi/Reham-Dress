@@ -24,10 +24,10 @@ class OrderController extends Controller
 
         if ($order->status == 'pending') {
             $order->status = 'قيد الانتظار';
-        } elseif ($order->status == 'قيد المعالجة') {
-            $order->status = '';
-        } elseif ($order->status == 'تم الشحن') {
-            $order->status = '';
+        } elseif ($order->status == 'processing') {
+            $order->status = 'قيد المعالجة';
+        } elseif ($order->status == 'shipped') {
+            $order->status = 'تم الشحن';
         } elseif ($order->status == 'delivered') {
             $order->status = 'تم التسليم';
         } else {
