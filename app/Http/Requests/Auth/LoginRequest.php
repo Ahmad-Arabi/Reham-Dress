@@ -33,6 +33,21 @@ class LoginRequest extends FormRequest
     }
 
     /**
+     * Get the custom validation messages for the request.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'يرجى إدخال البريد الإلكتروني.',
+            'email.email' => 'صيغة البريد الإلكتروني غير صحيحة.',
+            'password.required' => 'يرجى إدخال كلمة المرور.',
+            
+        ];
+    }
+
+    /**
      * Attempt to authenticate the request's credentials.
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -45,7 +60,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'بيانات الدخول غير صحيحة. يرجى المحاولة مرة أخرى.',
             ]);
         }
 

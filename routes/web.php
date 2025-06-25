@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\User\CheckoutController;
 
 Route::get('/', function () {
@@ -55,6 +56,13 @@ Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
     Route::put('/coupons/{id}', [CouponController::class, 'update'])->name('admin.coupons.update');
     Route::get('/cpupons/delete/{id}', [CouponController::class, 'delete'])->name('admin.coupons.delete');
     Route::delete('/coupons/{id}', [CouponController::class, 'destroy'])->name('admin.coupons.destroy'); 
+    
+    //Orders CRUD
+    Route::get('/orders', [OrdersController::class, 'index'])->name('admin.orders.index');
+    Route::post('/orders', [OrdersController::class, 'store'])->name('admin.orders.store');
+    Route::get('/orders/{id}/edit', [OrdersController::class, 'edit'])->name('admin.orders.edit');
+    Route::put('/orders/{id}', [OrdersController::class, 'update'])->name('admin.orders.update');
+    Route::get('/orders/{id}', [OrdersController::class, 'show'])->name('admin.orders.show'); 
     
 });
 

@@ -27,6 +27,7 @@
     @vite(['resources/css/app.css'])
     @vite(['resources/css/test.css'])
     @stack('styles')
+    @include('partials.order-status-icons')
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
 </head>

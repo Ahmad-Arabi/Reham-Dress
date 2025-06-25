@@ -11,6 +11,7 @@ body {
     --admin-pink-dark: #be185d;
     --admin-pink-light: #fce7f3;
     --admin-pink-hover: #db2777;
+    --secondary-color: #E74C3C;
 }
 
 .sidebar {
@@ -167,6 +168,16 @@ body {
 .btn-primary:hover, .btn-primary:focus, .btn-pink:hover, .btn-pink:focus {
     background: linear-gradient(90deg, var(--admin-pink-hover) 60%, var(--admin-pink) 100%);
     color: #fff;
+}
+
+.btn-details {
+    background: linear-gradient(90deg, var(--secondary-color) 60%, #c0392b 100%) !important;
+    color: #fff !important;
+    border: none;
+}
+.btn-details:hover, .btn-details:focus {
+    background: linear-gradient(90deg, #c0392b 60%, var(--secondary-color) 100%) !important;
+    color: #fff !important;
 }
 
 .btn-sm {

@@ -31,7 +31,7 @@ class OrderController extends Controller
         } elseif ($order->status == 'delivered') {
             $order->status = 'تم التسليم';
         } else {
-            $order->status = 'ملغى ';
+            $order->status = 'ملغي';
         }
 
 

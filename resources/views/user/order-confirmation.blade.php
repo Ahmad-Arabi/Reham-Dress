@@ -33,7 +33,23 @@
                         <div class="card-header bg-white">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">رقم الطلب: {{ $order->id }}</h5>
-                                <span class="badge bg-primary">الحالة: {{ ucfirst($order->status) }}</span>
+                                @php
+                                    $status = trim($order->status);
+                                    $badge = [
+                                        'قيد الانتظار'   => ['color' => 'warning', 'icon' => 'hourglass-split'],
+                                        'قيد المعالجة'   => ['color' => 'info',    'icon' => 'arrow-repeat'],
+                                        'تم الشحن'       => ['color' => 'primary', 'icon' => 'truck'],
+                                        'تم التسليم'     => ['color' => 'success', 'icon' => 'check-circle'],
+                                        'ملغي'           => ['color' => 'secondary',  'icon' => 'x-circle'],
+                                    ];
+                                    $map = $badge[$status] ?? ['color' => 'secondary', 'icon' => 'question-circle'];
+                                @endphp
+                                <span class="badge bg-{{ $map['color'] }} d-inline-flex align-items-center" style="font-size:0.9rem;">
+                                    <svg width="18" height="18" fill="currentColor" class="me-1">
+                                        <use xlink:href="#{{ $map['icon'] }}" />
+                                    </svg>
+                                    <span class="ms-1">{{ $status }}</span>
+                                </span>
                             </div>
                         </div>
                         <div class="card-body">
@@ -42,7 +58,7 @@
                                     <h6 class="text-muted mb-2">تفاصيل الطلب</h6>
                                     <p class="mb-1"><strong>تاريخ الطلب:</strong>
                                         {{ $order->created_at->format('F j, Y, g:i a') }}</p>
-                                    <p class="mb-1"><strong>الإجمالي:</strong> {{ $order->total_price }} دينار</p>
+                                    <p class="mb-1"><strong>الإجمالي:</strong> {{ $order->total_amount }} دينار</p>
                                     <p class="mb-0"><strong>طريقة الدفع:</strong>
                                         @if (stripos($order->payment_method, 'COD') !== false)
                                             الدفع عند الاستلام
