@@ -38,7 +38,7 @@
                     <img class="img-fluid" style="height: 80px;" src="{{ asset('images/logo.png') }}" alt="Reham Dress">
                 </div>
                 <nav class="nav flex-column px-3 mt-3">
-                    <a href="#"
+                    <a href="{{ route('admin.dashboard') }}"
                         class="nav-link mb-2 {{ request()->routeIs('admin.dashboard') ? 'active' : '' }} text-admin-pink">
                         <i class="bi bi-house me-2 text-admin-pink"></i> الرئيسية
                     </a>
@@ -58,10 +58,7 @@
                         class="nav-link mb-2 {{ request()->routeIs('admin.coupons.*') ? 'active' : '' }} text-admin-pink">
                         <i class="bi bi-tags me-2 text-admin-pink"></i> الكوبونات
                     </a>
-                    <a href=" {{ route('admin.coupons.index') }}"
-                        class="nav-link mb-2 {{ request()->routeIs('admin.settings.*') ? 'active' : '' }} text-admin-pink">
-                        <i class="bi bi-gear me-2 text-admin-pink"></i> الإعدادات
-                    </a>
+
                 </nav>
                 <div class="mt-auto border-top p-3">
                     <div class="fw-semibold text-center text-admin-pink mb-2"

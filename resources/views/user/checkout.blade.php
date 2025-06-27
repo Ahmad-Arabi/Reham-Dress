@@ -30,6 +30,8 @@
                 </div>
             @endif
 
+
+
             <div class="row">
                 <div class="d-grid gap-2 my-3 mx-1 justify-content-start ">
                     <a href="{{ route('cart.index') }}" class="btn btn-outline-secondary">
@@ -37,8 +39,19 @@
                     </a>
                 </div>
 
+                            @if(isset($latestActiveCoupon) && $latestActiveCoupon)
+                <div class="alert alert-warning d-flex align-items-start gap-2 mb-3" style="font-size:0.98em;">
+                    <i class="bi bi-ticket-perforated fs-5 text-admin-pink"></i>
+                    <span>
+                        كوبون متاح الآن: <span class="fw-bold">{{ $latestActiveCoupon->code }}</span>
+                        <span class="badge bg-success ms-2">خصم {{ $latestActiveCoupon->discount }} دينار</span>
+                        <span class="text-muted ms-2">ساري حتى {{($latestActiveCoupon->expiry_date) }}</span>
+                    </span>
+                </div>
+            @endif
                 <!-- Checkout Form -->
                 <div class="col-lg-8 mb-4 mb-lg-0">
+                    
                     <div class="card shadow-sm mb-4">
                         <div class="card-header bg-white">
                             <h5 class="mb-0">معلومات التوصيل</h5>

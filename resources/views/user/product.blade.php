@@ -8,7 +8,9 @@
         <div class="col-md-6">
             <div class="product-card" style="max-width:100%">
                 @if($product->images && count($product->images))
-                    <img src="{{ asset($product->images[0]->path) }}" alt="{{ $product->name }}" class="w-100 mb-4" style="max-height:350px;object-fit:cover;">
+                    <img src="{{ asset('storage/' . $product->images[0]->path) }}" alt="{{ $product->name }}" class="w-100 mb-4" style="max-height:350px;object-fit:cover;">
+                @elseif ($product->thumbnail)
+                    <img src="{{ asset('storage/products/thumbnails/' . $product->id . '/' . $product->thumbnail) }}" alt="{{ $product->name }}" class="w-100 mb-4" style="max-height:350px;object-fit:cover;">
                 @else
                     <img src="{{ asset('images/fallback.jpg') }}" alt="{{ $product->name }}" class="w-100 mb-4" style="max-height:350px;object-fit:cover;">
                 @endif

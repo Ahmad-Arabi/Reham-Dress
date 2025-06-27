@@ -21,7 +21,7 @@
                 <li><a href="{{ url('/contact') }}" class="nav-link">اتصل بنا</a></li>
                 @auth
                     @if(Auth::user()->isAdmin || Auth::user()->role === 'admin')
-                        <li><a href="{{ url('/admin') }}" class="nav-link fw-bold text-fuchsia">لوحة التحكم</a></li>
+                    <li><a href="{{ route('admin.dashboard') }}" class="nav-link fw-bold text-fuchsia">لوحة التحكم</a></li>
                     @endif
                 @endauth
             </ul>

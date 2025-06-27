@@ -10,13 +10,14 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminProductController;
 
 Route::get('/',[HomeController::class, 'index'])->name('home');
 
-Route::get('/test', function () {
-    return view('test');
-})->name('test');
+Route::get('/shop', function () {
+    return view('user.shop');
+})->name('shop');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -30,7 +31,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/product/{id}', function ($id) {
     $product = Product::with([ 'colors', 'sizes'])->find($id);
-    return view('product', compact('product'));
+    return view('user.product', compact('product'));
 });
 
 // Cart Routes
@@ -88,6 +89,7 @@ Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
     Route::get('/products/{product}/delete', [AdminProductController::class, 'deleteConfirm'])->name('admin.products.delete');
     Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');
     
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
 

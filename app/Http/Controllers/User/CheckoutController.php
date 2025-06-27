@@ -76,6 +76,13 @@ class CheckoutController extends Controller
         $totalPrice += $shippingFees;
 
         
+        // Get latest active coupon for user info
+        $latestActiveCoupon = Coupon::where('isFeatured', 1)
+            ->where('start_date', '<=', now())
+            ->where('expiry_date', '>=', now())
+            ->orderByDesc('updated_at')
+            ->first();
+
         return view('user.checkout', compact(
             'cartItems', 
             'subtotal', 
@@ -83,7 +90,8 @@ class CheckoutController extends Controller
             'totalPrice', 
             'user',
             'appliedCoupon',
-            'shippingFees'
+            'shippingFees',
+            'latestActiveCoupon'
         ));
     }
     
