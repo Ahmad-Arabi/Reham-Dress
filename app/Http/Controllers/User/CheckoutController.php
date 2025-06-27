@@ -115,7 +115,15 @@ class CheckoutController extends Controller
         if (!$coupon) {
             return back()->with('error', ' الكوبون غير صحيح أو منتهي الصلاحية!');
         }
-        
+
+        $oneTimeUse = Order::where('user_id', Auth::id())
+            ->where('coupon_id', $coupon->id)
+            ->exists();
+
+        if ($oneTimeUse) {
+            return back()->with('error', 'لقد قمت باستخدام هذا الكوبون من قبل. لا يمكنك استخدامه مرة أخرى.');
+        }
+
         // Get user-specific cart items
         $cartItems = $this->getUserCartItems();
         

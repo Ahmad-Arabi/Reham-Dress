@@ -65,4 +65,16 @@ class OrderController extends Controller
         
         return view('userside.order-details', compact('order'));
     }
+
+    public function generateReceipt(Order $order)
+    {
+        if ($order->user_id !== Auth::id() && Auth::user()->role !== 'admin') {
+            abort(403, 'لا يمكنك الوصول إلى هذه الصفحة');
+        }
+
+        $order = Order::with(['user', 'products', 'products.colors', 'products.sizes', 'orderItems'])
+            ->findOrFail($order->id);
+
+        return view('user.receipt', compact('order'));
+    }
 }

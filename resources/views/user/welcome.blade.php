@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('page_title', 'الرئيسية')
 @section('content')
     
 <section class="hero" id="home">

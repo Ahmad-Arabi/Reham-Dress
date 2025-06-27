@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     
     // Order Routes
     Route::get('/order/confirmation/{order}', [OrderController::class, 'confirmation'])->name('order.confirmation');
+    Route::get('/order/receipt/{order}', [OrderController::class, 'generateReceipt'])->name('order.receipt');
 });
 
 Route::prefix('admin')->middleware(['isAdmin'])->group(function () {

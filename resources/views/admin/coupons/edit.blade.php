@@ -73,12 +73,18 @@
                 </div>
                 <div class="mb-3">
                     <label for="isFeatured" class="form-label">الحالة</label>
-                    <select class="form-select" id="isFeatured" name="isFeatured">
-                        <option value="1" {{ (old('isFeatured') ?? $coupon->isFeatured) == 1 ? 'selected' : '' }}>فعال
-                        </option>
-                        <option value="0" {{ (old('isFeatured') ?? $coupon->isFeatured) == 0 ? 'selected' : '' }}>غير
-                            فعال</option>
-                    </select>
+                    <div class="position-relative">
+                        <select class="form-select pe-5" id="isFeatured" name="isFeatured">
+                            <option value="1" {{ (old('isFeatured') ?? $coupon->isFeatured) == 1 ? 'selected' : '' }}>فعال
+                            </option>
+                            <option value="0" {{ (old('isFeatured') ?? $coupon->isFeatured) == 0 ? 'selected' : '' }}>غير
+                                فعال</option>
+                        </select>
+                        <span class="position-absolute top-50 end-0 translate-middle-y me-3"
+                            style="pointer-events:none;">
+                            <i class="fa fa-chevron-down text-muted"></i>
+                        </span>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-success px-4">تعديل الكوبون</button>

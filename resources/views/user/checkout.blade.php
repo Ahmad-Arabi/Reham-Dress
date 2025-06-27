@@ -47,10 +47,11 @@
                             <form id="checkoutForm" action="{{ route('checkout.place-order') }}" method="POST">
                                 @csrf
 
-                                @if(!empty($user->address) && !empty($user->phone))
+                                @if (!empty($user->address) && !empty($user->phone))
                                     <div class="mb-3  address-box">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="address_option" id="use_existing" value="existing" checked>
+                                            <input class="form-check-input" type="radio" name="address_option"
+                                                id="use_existing" value="existing" checked>
                                             <label class="form-check-label" for="use_existing">
                                                 استخدم العنوان ورقم الهاتف الحاليين:
                                                 <div class="ps-3 fw-bold">
@@ -60,7 +61,8 @@
                                             </label>
                                         </div>
                                         <div class="form-check mt-4">
-                                            <input class="form-check-input" type="radio" name="address_option" id="enter_new" value="new">
+                                            <input class="form-check-input" type="radio" name="address_option"
+                                                id="enter_new" value="new">
                                             <label class="form-check-label" for="enter_new">
                                                 إدخال عنوان ورقم هاتف جديدين
                                             </label>
@@ -68,17 +70,16 @@
                                         <div id="new_address_fields" class="mb-5" style="display: none;">
                                             <div class="mb-3">
                                                 <label for="delivery_address" class="form-label">عنوان التوصيل</label>
-                                                <input type="text" class="form-control" id="delivery_address" name="address"
-                                                    value="{{ $user->address  }}">
+                                                <input type="text" class="form-control" id="delivery_address"
+                                                    name="address" value="{{ $user->address }}">
                                             </div>
                                             <div class="mb-5">
                                                 <label for="phone" class="form-label">رقم الهاتف</label>
                                                 <input type="text" class="form-control" id="phone_number" name="phone"
-                                                    value="{{ $user->phone  }}">
+                                                    value="{{ $user->phone }}">
                                             </div>
                                         </div>
                                     </div>
-                                    
                                 @else
                                     <div class="mb-3">
                                         <label for="delivery_address" class="form-label">عنوان التوصيل</label>
@@ -135,7 +136,7 @@
                                         <div class="order-item-details flex-grow-1">
                                             <h6 class="item-name mb-1">{{ $item['name'] }}</h6>
                                             <div class="item-specs small text-muted">
-                                                <div>المقاس: <span  class="fw-bold">{{ $item['size'] }}</span></div>
+                                                <div>المقاس: <span class="fw-bold">{{ $item['size'] }}</span></div>
                                                 <div>الكمية: <span class="fw-bold">{{ $item['quantity'] }}</span></div>
                                             </div>
                                         </div>
@@ -153,8 +154,8 @@
                                 </div>
                                 <div class="d-flex justify-content-between mb-2">
                                     <span class="fw-bold">رسوم الشحن:</span>
-                                    <strong>                                       
-                                        {{ number_format($shippingFees, 2) . ' دينار' }}                                      
+                                    <strong>
+                                        {{ number_format($shippingFees, 2) . ' دينار' }}
                                     </strong>
                                 </div>
 
@@ -186,8 +187,8 @@
                                             <span class="badge bg-success me-2">تم التطبيق</span>
                                             <strong>{{ $appliedCoupon['code'] }}</strong>
                                             <span class="text-muted ms-2">
-                                               
-                                                    ({{ $appliedCoupon['discount'] }} دينار)
+
+                                                ({{ $appliedCoupon['discount'] }} دينار)
                                             </span>
                                         </div>
                                         <form action="{{ route('checkout.remove-coupon') }}" method="POST">
@@ -204,10 +205,13 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="coupon_code"
                                             placeholder="أدخل رمز الكوبون">
-                                        <button type="submit"
-                                            class="btn btn-outline-primary apply-btn">إدخال</button>
+                                        <button type="submit" class="btn btn-outline-primary apply-btn">إدخال</button>
                                     </div>
                                 </form>
+                                <small class="text-muted" style="font-size: 0.85em;">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    يمكن استخدام الكوبون مرة واحدة فقط
+                                </small>
                             @endif
                         </div>
                     </div>
@@ -218,16 +222,17 @@
         </div>
     </div>
 @endsection
-    @push('styles')
-        @vite(['resources/css/checkout.css'])
-    @endpush
+@push('styles')
+    @vite(['resources/css/checkout.css'])
+@endpush
 
-    @push('scripts')
-        <script>
-        document.addEventListener('DOMContentLoaded', function () {
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
             const useExisting = document.getElementById('use_existing');
             const enterNew = document.getElementById('enter_new');
             const newFields = document.getElementById('new_address_fields');
+
             function toggleFields() {
                 newFields.style.display = enterNew.checked ? 'block' : 'none';
             }
@@ -236,5 +241,4 @@
             toggleFields();
         });
     </script>
-    @endpush
-
+@endpush

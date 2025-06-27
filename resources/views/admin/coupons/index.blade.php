@@ -52,12 +52,30 @@
     <!-- أدوات التصفية والبحث -->
     <div class="filters-row mb-3">
         <input type="text" id="searchInput" name="search" data-filter="search" placeholder="بحث عن كوبون..." class="form-control search-filter-input" style="max-width: 220px;" value="{{ request('search', '') }}">
-        <select id="statusFilter" name="status" data-filter="status" class="form-select search-filter-input" style="max-width: 180px;">
-            <option value="" {{ request('status', '') === '' ? 'selected' : '' }}>جميع الحالات</option>
-            <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>نشط</option>
-            <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>غير نشط</option>
-        </select>
+        <div class="position-relative" style="max-width: 180px; display:inline-block;">
+            <select id="statusFilter" name="status" data-filter="status" class="form-select search-filter-input pe-5">
+                <option value="" {{ request('status', '') === '' ? 'selected' : '' }}>جميع الحالات</option>
+                <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>نشط</option>
+                <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>غير نشط</option>
+            </select>
+            <span class="position-absolute top-50 end-0 translate-middle-y me-3" style="pointer-events:none;">
+                <i class="fa fa-chevron-down text-muted"></i>
+            </span>
+        </div>
     </div>
+    <!-- ملاحظة -->
+        <div class="mb-2">
+            <small class="text-muted" style="font-size: 0.85em;">
+                <i class="bi bi-info-circle me-1"></i>
+                 "يمكن استخدام الكوبون من قبل المستخدمين في حال كان الكوبون فعال وضمن المدة المحددة".
+            </small>
+        </div>
+        <div class="mb-2">
+            <small class="text-muted" style="font-size: 0.85em;">
+                <i class="bi bi-info-circle me-1"></i>
+                 "يمكن استخدام الكوبون الواحد لطلب واحد فقط لكل مستخدم".
+            </small>
+        </div>
     
     <!-- جدول الكوبونات -->
     @if($coupons->count())
@@ -88,9 +106,15 @@
                         </span>
                     </td>
                     <td>
-                        <div class="d-flex gap-2 justify-content-end">
-                            <a href="{{ route('admin.coupons.edit', $coupon->id) }}" class="btn btn-primary btn-sm">تعديل</a>
-                            <a href="{{ route('admin.coupons.delete', $coupon->id) }}" class="btn btn-danger btn-sm">حذف</a>
+                        <div class="d-flex gap-2 justify-content-start">
+                            <a href="{{ route('admin.coupons.edit', $coupon->id) }}" class="btn btn-primary btn-sm d-flex align-items-center gap-1">
+                                <i class="bi bi-pencil-square me-1"></i>
+                                تعديل
+                            </a>
+                            <a href="{{ route('admin.coupons.delete', $coupon->id) }}" class="btn btn-danger btn-sm d-flex align-items-center gap-1">
+                                <i class="bi bi-trash me-1"></i>
+                                حذف
+                            </a>
                         </div>
                     </td>
                 </tr>

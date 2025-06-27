@@ -1,4 +1,8 @@
 /* Order Confirmation page styles */
+body{
+background: #f9fafb;
+}
+
 .order-confirmation-page .card {
     background-color: var(--white);
     border: 1.5px solid var(--primary-color);

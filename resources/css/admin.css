@@ -12,6 +12,32 @@ body {
     --admin-pink-light: #fce7f3;
     --admin-pink-hover: #db2777;
     --secondary-color: #E74C3C;
+    --admin-light-purple: #f5f3ff;
+    --admin-light-pink: #fff0fa;
+}
+
+.bg-admin-light-purple {
+    background: var(--admin-light-purple) !important;
+}
+
+.admin-light-purple-input,
+.admin-light-purple-input:focus {
+    background: var(--admin-light-purple) !important;
+    border-color: #e0e7ff !important;
+    color: #4b2995 !important;
+    box-shadow: none !important;
+}
+
+.bg-admin-light-pink {
+    background: var(--admin-light-pink) !important;
+}
+
+.admin-light-pink-input,
+.admin-light-pink-input:focus {
+    background: var(--admin-light-pink) !important;
+    border-color: #f9a8d4 !important;
+    color: #be185d !important;
+    box-shadow: none !important;
 }
 
 .sidebar {
@@ -186,6 +212,15 @@ body {
     border-radius: 0.4rem;
     min-width: 90px;
     min-height: 36px;
+}
+
+/* Update order form main inputs to use the new pink background */
+.order-form-main-input,
+.order-form-main-input:focus {
+    background: var(--admin-light-pink) !important;
+    border-color: #f9a8d4 !important;
+    color: #be185d !important;
+    box-shadow: none !important;
 }
 
 /* RTL tweaks */

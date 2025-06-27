@@ -1,8 +1,6 @@
 /* Checkout page styles */
-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+body{
+background: #f9fafb;
 }
 
 .checkout-page .card {
