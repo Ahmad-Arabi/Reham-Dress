@@ -42,7 +42,7 @@
                         class="nav-link mb-2 {{ request()->routeIs('admin.dashboard') ? 'active' : '' }} text-admin-pink">
                         <i class="bi bi-house me-2 text-admin-pink"></i> الرئيسية
                     </a>
-                    <a href="#"
+                    <a href="{{ route('admin.products.index') }}"
                         class="nav-link mb-2 {{ request()->routeIs('admin.products.*') ? 'active' : '' }} text-admin-pink">
                         <i class="bi bi-box-seam me-2 text-admin-pink"></i> المنتجات
                     </a>
@@ -50,7 +50,7 @@
                         class="nav-link mb-2 {{ request()->routeIs('admin.orders.*') ? 'active' : '' }} text-admin-pink">
                         <i class="bi bi-receipt me-2 text-admin-pink"></i> الطلبات
                     </a>
-                    <a href="#"
+                    <a href="{{ route('admin.users.index') }}"
                         class="nav-link mb-2 {{ request()->routeIs('admin.users.*') ? 'active' : '' }} text-admin-pink">
                         <i class="bi bi-people me-2 text-admin-pink"></i> المستخدمين
                     </a>

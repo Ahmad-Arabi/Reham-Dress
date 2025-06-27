@@ -151,8 +151,8 @@ class CartController extends Controller
 
             //     return redirect()->back()->with('success', 'تم إضافة المنتح إلى السلة');
             // }
-            return redirect()->back()->with('success', 'تم إضافة المنتح إلى السلة');
-            
+            return redirect()->route('cart.index')->with('success', 'تم إضافة المنتح إلى السلة');
+
         } catch (\Exception $e) {
             Log::error('Error adding item to cart: ' . $e->getMessage());
             return redirect()->back()->with('error', 'يرجى التأكد من تحديد الخيارات المطلوبة.');

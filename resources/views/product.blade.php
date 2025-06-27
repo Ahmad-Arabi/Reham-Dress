@@ -1,53 +1,69 @@
 @extends('layouts.app')
 
-@section('content')
-    @if ($product)
-    @if (session('success'))
-            <h1>
-                {{ session('success') }}
-            </h1>
-        @endif
-        @if (session('error'))
-            <h1>
-                {{ session('error') }}
-            </h1>
-        @endif
-        <div style="max-width: 600px; margin: 2rem auto; border: 1px solid #eee; border-radius: 8px; padding: 2rem;">
-            <h2>{{ $product->name }}</h2>
-            <img src="{{ $product->thumbnail ? asset('storage/products/thumbnails/' . $product->id . '/' . $product->thumbnail) : asset('images/fallback.jpg')}}" class="w-25">
+@section('page_title', 'تفاصيل المنتج')
 
-            <p>{{ $product->description }}</p>
-            <p><strong>Price:</strong> ${{ $product->price }}</p>
-            <form method="POST" action="{{ route('cart.add') }}" style="margin-top: 1rem;">
+@section('content')
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="product-card" style="max-width:100%">
+                @if($product->images && count($product->images))
+                    <img src="{{ asset($product->images[0]->path) }}" alt="{{ $product->name }}" class="w-100 mb-4" style="max-height:350px;object-fit:cover;">
+                @else
+                    <img src="{{ asset('images/fallback.jpg') }}" alt="{{ $product->name }}" class="w-100 mb-4" style="max-height:350px;object-fit:cover;">
+                @endif
+            </div>
+        </div>
+        <div class="col-md-6 d-flex flex-column justify-content-center">
+            <h2 class="mb-3">{{ $product->name }}</h2>
+            <div class="price mb-3">{{ $product->price }} ر.س</div>
+            <p class="mb-4">{{ $product->description }}</p>
+            @if($product->colors && count($product->colors))
+                <div class="mb-3">
+                    <strong>الألوان المتوفرة:</strong>
+                    @foreach($product->colors as $color)
+                        <span style="display:inline-block;width:20px;height:20px;background:{{ $color->color }};border-radius:50%;border:1px solid #ccc;margin-left:5px;"></span>
+                    @endforeach
+                </div>
+            @endif
+            @if($product->sizes && count($product->sizes))
+                <div class="mb-3">
+                    <strong>المقاسات المتوفرة:</strong>
+                    @foreach($product->sizes as $size)
+                        <span class="badge bg-secondary mx-1">{{ $size->age }}</span>
+                    @endforeach
+                </div>
+            @endif
+            <form action="{{ route('cart.add') }}" method="POST" class="mb-0">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <div style="margin-bottom: 1rem;">
-                    <label for="color">Color:</label>
-                    <select name="color" id="color">
-                        @foreach ($product->colors as $color)
-                            <option value="{{ $color->id }}">{{ $color->color }}</option>
-                        @endforeach
-                    </select>
+                <div class="mb-3">
+                    <label for="quantity">الكمية:</label>
+                    <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-control w-25 d-inline-block" style="width:80px;">
                 </div>
-                <div style="margin-bottom: 1rem;">
-                    <label for="size">Size (Age):</label>
-                    <select name="size" id="size">
-                        @foreach ($product->sizes as $size)
-                            <option value="{{ $size->id }}">{{ $size->age }}</option>
-                        @endforeach
-                    </select>
-
-                <div>
-                    <input type="number" name="quantity">
-                </div>
-                </div>
-                <button type="submit"
-                    style="padding: 0.5rem 1.5rem; background: #38bdf8; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Add
-                    to Cart</button>
+                @if($product->colors && count($product->colors))
+                    <div class="mb-3">
+                        <label for="color">اختر اللون:</label>
+                        <select name="color" id="color" class="form-select w-50 d-inline-block">
+                            @foreach($product->colors as $color)
+                                <option value="{{ $color->id }}">{{ $color->color }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
+                @if($product->sizes && count($product->sizes))
+                    <div class="mb-3">
+                        <label for="size">اختر المقاس:</label>
+                        <select name="size" id="size" class="form-select w-50 d-inline-block">
+                            @foreach($product->sizes as $size)
+                                <option value="{{ $size->id }}">{{ $size->age }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
+                <button type="submit" class="btn btn-primary w-50">أضف إلى السلة</button>
             </form>
         </div>
-
-    @else
-        <p>No product found.</p>
-    @endif
-@endsection
+    </div>
+</div>
+@endsection 

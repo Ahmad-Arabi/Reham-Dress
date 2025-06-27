@@ -58,10 +58,7 @@ nav ul li a:hover {
     border-radius: 8px;
     font-weight: 500;
 }
-.auth-buttons .btn-login {
-    border: 2px solid #ec4899;
-    color: #ec4899;
-}
+
 .auth-buttons .btn-login:hover {
     background: #ec4899;
     color: white;
@@ -69,9 +66,6 @@ nav ul li a:hover {
 .auth-buttons .btn-register {
     background: #ec4899;
     color: white;
-}
-.auth-buttons .btn-register:hover {
-    background: #db2777;
 }
 
 /* Hero */

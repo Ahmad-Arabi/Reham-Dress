@@ -4,14 +4,19 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminProductController;
 
-Route::get('/', function () {
-    return view('user.welcome');
-})->name('home');
+Route::get('/',[HomeController::class, 'index'])->name('home');
+
+Route::get('/test', function () {
+    return view('test');
+})->name('test');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -55,7 +60,7 @@ Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
     Route::post('/coupons', [CouponController::class, 'store'])->name('admin.coupons.store');
     Route::get('/coupons/{id}/edit', [CouponController::class, 'edit'])->name('admin.coupons.edit');
     Route::put('/coupons/{id}', [CouponController::class, 'update'])->name('admin.coupons.update');
-    Route::get('/cpupons/delete/{id}', [CouponController::class, 'delete'])->name('admin.coupons.delete');
+    Route::get('/coupons/delete/{id}', [CouponController::class, 'delete'])->name('admin.coupons.delete');
     Route::delete('/coupons/{id}', [CouponController::class, 'destroy'])->name('admin.coupons.destroy'); 
     
     //Orders CRUD
@@ -64,6 +69,24 @@ Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
     Route::get('/orders/{id}/edit', [OrdersController::class, 'edit'])->name('admin.orders.edit');
     Route::put('/orders/{id}', [OrdersController::class, 'update'])->name('admin.orders.update');
     Route::get('/orders/{id}', [OrdersController::class, 'show'])->name('admin.orders.show'); 
+
+    // Users CRUD
+    Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+    Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+    Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
+    Route::get('/users/delete/{id}', [AdminUserController::class, 'delete'])->name('admin.users.delete');
+    Route::post('/users', [AdminUserController::class, 'store'])->name('admin.users.store');
+
+    // Products CRUD
+    Route::get('/products', [AdminProductController::class, 'index'])->name('admin.products.index');
+    Route::get('/products/create', [AdminProductController::class, 'create'])->name('admin.products.create');
+    Route::post('/products', [AdminProductController::class, 'store'])->name('admin.products.store');
+    Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('admin.products.edit');
+    Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('admin.products.update');
+    Route::get('/products/{product}/delete', [AdminProductController::class, 'deleteConfirm'])->name('admin.products.delete');
+    Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');
     
 });
 
