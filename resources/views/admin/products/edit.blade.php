@@ -45,7 +45,40 @@
                 <div class="mb-3">
                     <label for="images" class="form-label">صور إضافية</label>
                     <input type="file" class="form-control" id="images" name="images[]" multiple>
+                    
+                    <!-- Display existing additional images -->
+                    @if($product->images->count() > 0)
+                        <div class="mt-3">
+                            <label class="form-label">الصور الإضافية الحالية:</label>
+                            <div class="row">
+                                @foreach($product->images as $image)
+                                    <div class="col-md-3 mb-2">
+                                        <img src="{{ asset('storage/' . $image->path) }}" alt="صورة المنتج" class="img-thumbnail" width="100">
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
+
+                <!-- Delete All Images Section -->
+                @if($product->thumbnail || $product->images->count() > 0)
+                    <div class="mb-3 p-3 border rounded bg-light">
+                        <h6 class="text-danger">إدارة الصور</h6>
+                        <p class="text-muted mb-3">
+                            @if($product->thumbnail && $product->images->count() > 0)
+                                يحتوي هذا المنتج على صورة رئيسية و {{ $product->images->count() }} صورة إضافية
+                            @elseif($product->thumbnail)
+                                يحتوي هذا المنتج على صورة رئيسية فقط
+                            @else
+                                يحتوي هذا المنتج على {{ $product->images->count() }} صورة إضافية
+                            @endif
+                        </p>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteImagesModal">
+                            <i class="fas fa-trash"></i> حذف جميع الصور
+                        </button>
+                    </div>
+                @endif
 
                 <div class="mb-3">
                     <label for="colors" class="form-label">الألوان (افصل بينها بفاصلة)</label>
@@ -62,6 +95,40 @@
                     <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">إلغاء</a>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Images Confirmation Modal -->
+<div class="modal fade" id="deleteImagesModal" tabindex="-1" aria-labelledby="deleteImagesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteImagesModalLabel">تأكيد حذف جميع الصور</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-danger fw-bold">تحذير!</p>
+                <p>هل أنت متأكد من رغبتك في حذف جميع صور هذا المنتج؟</p>
+                <p class="text-muted">
+                    سيتم حذف:
+                    @if($product->thumbnail)
+                        • الصورة الرئيسية<br>
+                    @endif
+                    @if($product->images->count() > 0)
+                        • {{ $product->images->count() }} صورة إضافية
+                    @endif
+                </p>
+                <p class="text-danger"><strong>هذا الإجراء لا يمكن التراجع عنه!</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <form method="POST" action="{{ route('admin.products.deleteAllImages', $product->id) }}" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">حذف جميع الصور</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

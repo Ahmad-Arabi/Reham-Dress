@@ -10,7 +10,12 @@
             <a href="#about" class="btn-secondary">اعرف المزيد</a>         
         </div>     
     </div>     
-    <div class="hero-image">👗</div> 
+    <div class="hero-image">
+        <img src="{{ asset('storage/products/images/image.png') }}" 
+             alt="ملابس أطفال عصرية وأنيقة" 
+             class="hero-img"
+             loading="lazy">
+    </div> 
 </section>  
 
 <!-- Features --> 
@@ -129,7 +134,7 @@
     
     @if($featuredProducts->count() > 0)
         <div class="products-footer">
-            <a href=""class="btn-primary py-1 px-2">عرض جميع المنتجات</a>
+            <a href="" class="btn-primary py-1 px-2">عرض جميع المنتجات</a>
         </div>
     @endif
 </section> 
@@ -138,6 +143,111 @@
 
 @push('styles')
 <style>
+/* Global styles to prevent horizontal scroll */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+.container, .hero, .features, .products-preview {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Hero Section Styles */
+.hero {
+    display: flex;
+    align-items: center;
+    min-height: 80vh;
+    padding: 2rem 1rem;
+    gap: 3rem;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.hero-text {
+    flex: 1;
+    max-width: 600px;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.hero-image {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    max-width: 450px;
+    overflow: hidden;
+}
+
+.hero-img {
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 4px solid #fff;
+}
+
+.hero-img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        min-height: auto;
+        gap: 2rem;
+        padding: 1rem;
+    }
+    
+    .hero-text {
+        order: 2;
+        max-width: 100%;
+    }
+    
+    .hero-image {
+        order: 1;
+        width: 100%;
+        max-width: 320px;
+    }
+    
+    .hero-img {
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 1rem 0.5rem;
+        gap: 1.5rem;
+    }
+    
+    .hero-image {
+        max-width: 240px;
+    }
+    
+    .hero-img {
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+    }
+}
+
+/* Product Section Styles */
 .product-image img {
     width: 100%;
     height: 200px;
@@ -202,6 +312,46 @@
 .products-footer {
     text-align: center;
     margin-top: 3rem;
+}
+
+/* Additional Hero Enhancements */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(244, 245, 247, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Optional: Add decorative elements */
+.hero-image::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    border-radius: 50%;
+    opacity: 0.1;
+    z-index: -1;
+}
+
+.hero-image::before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, #a8e6cf, #dcedc1);
+    border-radius: 50%;
+    opacity: 0.15;
+    z-index: -1;
 }
 </style>
 @endpush
