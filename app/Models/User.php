@@ -50,6 +50,44 @@ class User extends Authenticatable
 
     public function orders()
     {
-        return $this->hasMany(OrderItem::class);
+         return $this->hasMany(Order::class);
+    }
+// public function isAdmin(): bool
+// {
+//     return $this->role === 'admin';
+// }
+
+
+
+    /**
+     * Get user's total orders count.
+     */
+    public function getTotalOrdersAttribute()
+    {
+        return $this->orders()->count();
+    }
+
+    /**
+     * Get user's total spent amount.
+     */
+    public function getTotalSpentAttribute()
+    {
+        return $this->orders()->sum('total_amount');
+    }
+
+    /**
+     * Get user's completed orders count.
+     */
+    public function getCompletedOrdersAttribute()
+    {
+        return $this->orders()->where('status', 'delivered')->count();
+    }
+
+    /**
+     * Get user's pending orders count.
+     */
+    public function getPendingOrdersAttribute()
+    {
+        return $this->orders()->whereIn('status', ['pending', 'processing', 'shipped'])->count();
     }
 }
