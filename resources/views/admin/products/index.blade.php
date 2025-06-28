@@ -51,19 +51,50 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        @if ($product->images->count())
+                                        @php
+                                            $totalImages = $product->images->count();
+                                            if ($product->thumbnail) {
+                                                $totalImages++;
+                                            }
+                                        @endphp
+
+                                        @if ($totalImages > 0)
                                             <div class="d-flex flex-wrap gap-1">
-                                                @foreach ($product->images->take(3) as $image)
-                                                    <img src="{{ asset('storage/' . $image->path) }}" alt=""
+                                                {{-- Show thumbnail first if exists --}}
+                                                @if ($product->thumbnail)
+                                                    <div class="position-relative">
+                                                        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}"
+                                                            width="50" height="50"
+                                                            style="object-fit: cover; border-radius: 4px; border: 2px solid #007bff;">
+                                                        <span class="position-absolute top-0 start-0 badge bg-primary" 
+                                                              style="font-size: 0.6rem; transform: translate(-25%, -25%);">رئيسية</span>
+                                                    </div>
+                                                @endif
+
+                                                {{-- Show additional images --}}
+                                                @php
+                                                    $remainingSlots = $product->thumbnail ? 2 : 3;
+                                                @endphp
+                                                @foreach ($product->images->take($remainingSlots) as $image)
+                                                    <img src="{{ asset('storage/' . $image->path) }}" alt="صورة المنتج"
                                                         width="50" height="50"
                                                         style="object-fit: cover; border-radius: 4px;">
                                                 @endforeach
-                                                @if ($product->images->count() > 3)
-                                                    <span class="badge bg-info">+{{ $product->images->count() - 3 }}</span>
+
+                                                {{-- Show count of remaining images --}}
+                                                @php
+                                                    $shownImages = $product->thumbnail ? ($remainingSlots + 1) : $remainingSlots;
+                                                    $remainingImages = $totalImages - $shownImages;
+                                                @endphp
+                                                @if ($remainingImages > 0)
+                                                    <span class="badge bg-info d-flex align-items-center justify-content-center" 
+                                                          style="width: 50px; height: 50px; border-radius: 4px;">
+                                                        +{{ $remainingImages }}
+                                                    </span>
                                                 @endif
                                             </div>
                                         @else
-                                            <span class="text-muted">لا صور</span>
+                                            <span class="text-muted">لا توجد صور</span>
                                         @endif
                                     </td>
                                     <td>

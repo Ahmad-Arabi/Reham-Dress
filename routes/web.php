@@ -88,6 +88,7 @@ Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
     Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('admin.products.update');
     Route::get('/products/{product}/delete', [AdminProductController::class, 'deleteConfirm'])->name('admin.products.delete');
     Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');
+     Route::delete('/admin/products/{product}/images', [App\Http\Controllers\Admin\AdminProductController::class, 'deleteAllImages'])->name('admin.products.deleteAllImages');
     
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
