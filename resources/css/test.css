@@ -402,3 +402,20 @@ footer {
         display: block;
     }
 }
+
+
+
+.pagination .page-link {
+    color: #db2777 !important;
+    font-weight: 600;
+    transition: none !important; /* Remove scale/transition */
+}
+.pagination .page-item.active .page-link {
+    background: #db2777 !important;
+    color: #fff !important;
+    border: none;
+}
+.pagination .page-link:focus {
+    box-shadow: none !important;
+}
+

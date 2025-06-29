@@ -94,6 +94,11 @@ class CartController extends Controller
             'size' => 'required|exists:sizes,id',
             'color' => 'required|exists:colors,id',
 
+        ], [
+            'product_id.required' => 'يرجى اختيار منتج لإضافته إلى السلة',
+            'quantity.required' => 'يرجى إدخال الكمية المطلوبة',
+            'size.required' => 'يرجى اختيار المقاس',
+            'color.required' => 'يرجى اختيار اللون',
         ]);
 
             

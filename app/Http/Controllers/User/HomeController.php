@@ -12,8 +12,8 @@ class HomeController extends Controller
     public function index()
   {
     $featuredProducts = Product::with(['colors', 'sizes'])
-        ->latest() // same as orderBy('created_at', 'desc')
-        ->take(3)
+        ->latest('updated_at') // same as orderBy('created_at', 'desc')
+        ->take(4)
         ->get();
 
     return view('user.welcome', compact('featuredProducts'));

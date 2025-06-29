@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\ShopController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrdersController;
@@ -15,9 +16,7 @@ use App\Http\Controllers\Admin\AdminProductController;
 
 Route::get('/',[HomeController::class, 'index'])->name('home');
 
-Route::get('/shop', function () {
-    return view('user.shop');
-})->name('shop');
+Route::get('/shop',[ShopController::class, 'index'])->name('shop');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -32,7 +31,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/product/{id}', function ($id) {
     $product = Product::with([ 'colors', 'sizes'])->find($id);
     return view('user.product', compact('product'));
-});
+})->name('product');
 
 // Cart Routes
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -51,7 +50,6 @@ Route::middleware('auth')->group(function () {
     
     // Order Routes
     Route::get('/order/confirmation/{order}', [OrderController::class, 'confirmation'])->name('order.confirmation');
-    Route::get('/order/receipt/{order}', [OrderController::class, 'generateReceipt'])->name('order.receipt');
 });
 
 Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
@@ -88,7 +86,8 @@ Route::prefix('admin')->middleware(['isAdmin'])->group(function () {
     Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('admin.products.update');
     Route::get('/products/{product}/delete', [AdminProductController::class, 'deleteConfirm'])->name('admin.products.delete');
     Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');
-    
+    Route::delete('/admin/products/{product}/images',[AdminProductController::class, 'deleteAllImages'])->name('admin.products.deleteAllImages');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 

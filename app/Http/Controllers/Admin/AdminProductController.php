@@ -30,20 +30,30 @@ class AdminProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'colors' => 'nullable|string',  // نص، مفصول بفواصل
-            'sizes' => 'nullable|string',   // نص، مفصول بفواصل
+            'colors' => 'nullable|array',
+            'colors.*' => 'nullable|string|max:255',
+            'sizes' => 'nullable|array',
+            'sizes.*' => 'nullable|string|max:255',
+            'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'images.*' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
         ], [
             'name.required' => 'الاسم مطلوب.',
             'description.required' => 'الوصف مطلوب.',
             'price.required' => 'السعر مطلوب.',
             'stock.required' => 'المخزون مطلوب.',
+            'thumbnail.image' => 'الصورة الرئيسية يجب أن تكون من نوع صورة.',
+            'thumbnail.mimes' => 'الصورة الرئيسية يجب أن تكون من نوع jpg, jpeg, png, أو gif.',
+            'thumbnail.max' => 'حجم الصورة الرئيسية يجب أن لا يتجاوز 2 ميجابايت.',
             'images.*.image' => 'يجب أن تكون الصورة من نوع صورة.',
             'images.*.mimes' => 'الصورة يجب أن تكون من نوع jpg, jpeg, png, أو gif.',
             'images.*.max' => 'حجم الصورة يجب أن لا يتجاوز 2 ميجابايت.',
-            'colors.string' => 'الألوان يجب أن تكون نصاً مفصولاً بفواصل.',
-            'sizes.string' => 'الأحجام يجب أن تكون نصاً مفصولاً بفواصل.',
+            'colors.array' => 'يرجى إضافة لون واحد في كل حقل.',
+            'colors.*.string' => 'كل لون يجب أن يكون نصاً.',
+            'sizes.array' => 'يرجى إضافة مقاس واحد في كل حقل.',
+            'sizes.*' => 'nullable|string|max:255',
         ]);
+
+        
 
         // أنشئ المنتج أولاً
         $product = Product::create([
@@ -51,16 +61,26 @@ class AdminProductController extends Controller
             'description' => $validated['description'],
             'price' => $validated['price'],
             'stock' => $validated['stock'],
+
         ]);
 
+        // Handle thumbnail upload
+        $thumbnailPath = null;
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailPath = $request->file('thumbnail')->store('products/thumbnails/'. $product->id, 'public');
+            $thumbnailName = $request->file('thumbnail')->hashName();
+            $product->update(['thumbnail' => $thumbnailName ?? null]);
+        }
+
+
         // التعامل مع الألوان
-        $colors = array_filter(array_map('trim', explode(',', $request->input('colors', ''))));
+        $colors = array_filter($request->input('colors', []));
         foreach ($colors as $color) {
             Color::create(['product_id' => $product->id, 'color' => $color]);
         }
 
         // التعامل مع الأحجام (الأعمار)
-        $sizes = array_filter(array_map('trim', explode(',', $request->input('sizes', ''))));
+        $sizes = array_filter($request->input('sizes', []));
         foreach ($sizes as $size) {
             Size::create(['product_id' => $product->id, 'age' => $size]);
         }
@@ -89,10 +109,12 @@ class AdminProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'colors' => 'nullable|string', // نص مفصول بفواصل
-            'sizes' => 'nullable|string',  // نص مفصول بفواصل
-            'images.*' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
-            'thumbnail' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
+            'colors' => 'nullable|array',
+            'colors.*' => 'nullable|string|max:255',
+            'sizes' => 'nullable|array',
+            'sizes.*' => 'nullable|string|max:255',
+            'images.*' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ], [
             'name.required' => 'الاسم مطلوب.',
             'description.required' => 'الوصف مطلوب.',
@@ -101,42 +123,49 @@ class AdminProductController extends Controller
             'images.*.image' => 'يجب أن تكون الصورة من نوع صورة.',
             'images.*.mimes' => 'الصورة يجب أن تكون من نوع jpg, jpeg, png, أو gif.',
             'images.*.max' => 'حجم الصورة يجب أن لا يتجاوز 2 ميجابايت.',
-            'colors.string' => 'الألوان يجب أن تكون نصاً مفصولاً بفواصل.',
-            'sizes.string' => 'الأحجام يجب أن تكون نصاً مفصولاً بفواصل.',
+            'colors.array' => 'يرجى إضافة لون واحد في كل حقل.',
+            'colors.*.string' => 'كل لون يجب أن يكون نصاً.',
+            'sizes.array' => 'يرجى إضافة مقاس واحد في كل حقل.',
+            'sizes.*' => 'nullable|string|max:255',
             'thumbnail.image' => 'الصورة الرئيسية يجب أن تكون من نوع صورة.',
             'thumbnail.mimes' => 'الصورة الرئيسية يجب أن تكون من نوع jpg, jpeg, png, أو gif.',
             'thumbnail.max' => 'حجم الصورة الرئيسية يجب أن لا يتجاوز 2 ميجابايت.',
         ]);
 
-        if ($request->hasFile('thumbnail')) {
-            // احذف الصورة القديمة إذا كانت موجودة
-            if ($product->thumbnail) {
-                Storage::disk('public')->delete($product->thumbnail);
-            }
-
-            // خزّن الصورة الجديدة
-            $path = $request->file('thumbnail')->store('products/thumbnails/' . $product->id, 'public');
-            // Product::create(['thumbnail' => $request->thumbnail]);
-        }
-
-        // حدّث بيانات المنتج الأساسية
-        $product->update([
+        // Prepare update data
+        $updateData = [
             'name' => $validated['name'],
             'description' => $validated['description'],
             'price' => $validated['price'],
             'stock' => $validated['stock'],
-        ]);
+        ];
+
+        // Handle thumbnail upload
+        if ($request->hasFile('thumbnail')) {
+            // احذف الصورة القديمة إذا كانت موجودة
+            if ($product->thumbnail) {
+                Storage::disk('public')->delete('products/thumbnails/' . $product->id . '/' . $product->thumbnail);
+            }
+
+            // خزّن الصورة الجديدة
+            $thumbnailPath = $request->file('thumbnail')->store('products/thumbnails/' . $product->id, 'public');
+            $thumbnailName = $request->file('thumbnail')->hashName();
+            $updateData['thumbnail'] = $thumbnailName;
+        }
+
+        // حدّث بيانات المنتج الأساسية
+        $product->update($updateData);
 
         // حذف الألوان القديمة وإضافة الجديدة
         $product->colors()->delete();
-        $colors = array_filter(array_map('trim', explode(',', $request->input('colors', ''))));
+        $colors = array_filter($request->input('colors', []));
         foreach ($colors as $color) {
             Color::create(['product_id' => $product->id, 'color' => $color]);
         }
 
         // حذف الأحجام القديمة وإضافة الجديدة
         $product->sizes()->delete();
-        $sizes = array_filter(array_map('trim', explode(',', $request->input('sizes', ''))));
+        $sizes = array_filter($request->input('sizes', []));
         foreach ($sizes as $size) {
             Size::create(['product_id' => $product->id, 'age' => $size]);
         }
@@ -152,6 +181,24 @@ class AdminProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'تم تحديث المنتج بنجاح');
     }
 
+    // New method to delete all images for a product
+    public function deleteAllImages(Product $product)
+    {
+        // Delete all additional images from storage and database
+        foreach ($product->images as $image) {
+            Storage::disk('public')->delete($image->path);
+        }
+        $product->images()->delete();
+
+        // Delete thumbnail if exists
+        if ($product->thumbnail) {
+            Storage::disk('public')->delete('products/thumbnails/' . $product->id . '/' . $product->thumbnail);
+            $product->update(['thumbnail' => null]);
+        }
+
+        return redirect()->back()->with('success', 'تم حذف جميع صور المنتج بنجاح');
+    }
+
     public function deleteConfirm(Product $product)
     {
         return view('admin.products.delete', compact('product'));
@@ -159,6 +206,16 @@ class AdminProductController extends Controller
 
     public function destroy(Product $product)
     {
+        // Delete thumbnail if exists
+        if ($product->thumbnail) {
+            Storage::disk('public')->delete($product->thumbnail);
+        }
+
+        // Delete all additional images
+        foreach ($product->images as $image) {
+            Storage::disk('public')->delete($image->path);
+        }
+
         // حذف جميع البيانات المرتبطة أولاً
         $product->colors()->delete();
         $product->sizes()->delete();

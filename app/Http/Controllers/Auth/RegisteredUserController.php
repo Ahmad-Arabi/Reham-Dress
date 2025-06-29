@@ -31,7 +31,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:10'],
+            'phone' => ['required', 'string', 'min:10', 'max:10'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], [
@@ -40,6 +40,9 @@ class RegisteredUserController extends Controller
             'email.required' => 'يرجى إدخال البريد الإلكتروني',
             'password.required' => 'يرجى إدخال كلمة المرور',
             'password.confirmed' => 'تأكيد كلمة المرور غير متطابق',
+            'phone.min' => 'رقم الهاتف يجب أن يتكون من 10 خانات',
+            'phone.max' => 'رقم الهاتف يجب أن يتكون من 10 خانات',
+            'email.unique' => 'البريد الإلكتروني مستخدم بالفعل',
         ]);
 
         $user = User::create([

@@ -81,13 +81,13 @@
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                         </svg>
-                        {{ __('إنشاء حساب جديد') }}
+                        {{ __('إنشاء حساب جديد') }} 
                     </a>
                     <x-primary-button class="login-button">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
                         </svg>
-                        {{ __('تسجيل الدخول') }}
+                         {{ __('تسجيل الدخول') }} 
                     </x-primary-button>
                 </div>
                 
@@ -118,7 +118,6 @@
 
         .kids-login-wrapper {
             width: 100%;
-            max-width: 448px;
             position: relative;
         }
 
@@ -334,9 +333,61 @@
         @media (min-width: 640px) {
             .action-buttons {
                 flex-direction: row;
-                justify-content: space-between;
+                justify-content: flex-end;
                 align-items: center;
+                gap: 16px;
             }
+            .login-button, .register-button {
+                width: 260px;
+                min-width: 200px;
+                max-width: 100%;
+            }
+            .login-button {
+                order: 1;
+            }
+            .register-button {
+                order: 2;
+            }
+        }
+
+        .login-button, .register-button {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-weight: bold !important;
+            padding: 14px 32px !important;
+            border-radius: 12px !important;
+            border: none !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+            transition: all 0.2s ease !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
+            font-size: 16px !important;
+            width: 100% !important;
+            min-width: fit-content;
+            max-width: 100%;
+            min-height: 52px;
+        }
+        .login-button {
+            background: linear-gradient(45deg, #ec4899, #a855f7) !important;
+            color: white !important;
+        }
+        .login-button:hover {
+            background: linear-gradient(45deg, #db2777, #9333ea) !important;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15) !important;
+            transform: translateY(-2px) !important;
+        }
+        .register-button {
+            background-color: #fff !important;
+            color: #374151 !important;
+            border: 2px solid #e5e7eb !important;
+        }
+        .register-button:hover {
+            background-color: #f9fafb !important;
+            border-color: #d1d5db !important;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1) !important;
+            transform: translateY(-1px) !important;
+            color: #111827 !important;
         }
 
         .forgot-link {
@@ -357,34 +408,6 @@
         }
 
         .forgot-link svg {
-            margin-right: 8px;
-        }
-
-        .login-button {
-            background: linear-gradient(45deg, #ec4899, #a855f7) !important;
-            color: white !important;
-            font-weight: bold !important;
-            padding: 12px 32px !important;
-            border-radius: 12px !important;
-            border: none !important;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
-            transition: all 0.2s ease !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            text-decoration: none !important;
-            cursor: pointer !important;
-            font-size: 16px !important;
-            width: 100% !important;
-        }
-
-        .login-button:hover {
-            background: linear-gradient(45deg, #db2777, #9333ea) !important;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15) !important;
-            transform: translateY(-2px) !important;
-        }
-
-        .login-button svg {
             margin-right: 8px;
         }
 

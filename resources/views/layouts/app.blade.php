@@ -48,7 +48,7 @@
     <footer id="contact">
         <div class="footer-grid">
             <div class="footer-section">
-                <h4>ريهام دريس</h4>
+                <h4>فستان ريهام</h4>
                 <p>متجر متخصص في ملابس الأطفال العصرية والأنيقة.</p>
             </div>
             <div class="footer-section">
@@ -63,14 +63,13 @@
             <div class="footer-section">
                 <h4>تواصل معنا</h4>
                 <ul>
-                    <li><i class="fas fa-phone"></i> +966 123 456 789</li>
-                    <li><i class="fas fa-envelope"></i> info@rehamdress.com</li>
-                    <li><i class="fas fa-map-marker-alt"></i> الرياض، السعودية</li>
+                    <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/962772479467" class="text-decoration-none" target="_blank"><span style="direction:ltr;unicode-bidi:embed;">+962 7 7247 9467</span></a></li>
+                    <li><i class="fab fa-facebook"></i> <a href="https://www.facebook.com/reham.dress.2025" class="text-decoration-none" target="_blank">reham.dress.2025</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; 2025 ريهام دريس. جميع الحقوق محفوظة.
+            &copy; 2025  فستان ريهام. جميع الحقوق محفوظة.
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

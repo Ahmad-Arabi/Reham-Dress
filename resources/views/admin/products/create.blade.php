@@ -54,16 +54,18 @@
 
             <div class="mb-3">
                 <label class="form-label">ألوان المنتج</label>
-                <input type="text" class="form-control" name="colors[]" placeholder="أدخل لون (مثال: أحمر, أزرق)">
-               
-                <div id="extra-colors"></div>
+                <div id="colors-list">
+                    <input type="text" class="form-control mb-2" name="colors[]" placeholder="أدخل لون (مثال: أحمر)">
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary" onclick="addColorInput()">إضافة لون آخر</button>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">الأعمار (المقاسات)</label>
-                <input type="text" class="form-control" name="sizes[]" placeholder="مثال: من 3 إلى 5 سنوات, من 8 إلى 10 سنوات">
-            
-                <div id="extra-sizes"></div>
+                <div id="sizes-list">
+                    <input type="text" class="form-control mb-2" name="sizes[]" placeholder="مثال: من 3 إلى 5 سنوات">
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary" onclick="addSizeInput()">إضافة مقاس آخر</button>
             </div>
 
             <div class="mb-3">
@@ -83,14 +85,14 @@
 <script>
     function addColorInput() {
         const div = document.createElement('div');
-        div.innerHTML = '<input type="text" class="form-control mt-2" name="colors[]" placeholder="لون إضافي">';
-        document.getElementById('extra-colors').appendChild(div);
+        div.innerHTML = '<input type="text" class="form-control mb-2" name="colors[]" placeholder="لون إضافي">';
+        document.getElementById('colors-list').appendChild(div);
     }
 
     function addSizeInput() {
         const div = document.createElement('div');
-        div.innerHTML = '<input type="text" class="form-control mt-2" name="sizes[]" placeholder="مقاس إضافي">';
-        document.getElementById('extra-sizes').appendChild(div);
+        div.innerHTML = '<input type="text" class="form-control mb-2" name="sizes[]" placeholder="مقاس إضافي">';
+        document.getElementById('sizes-list').appendChild(div);
     }
 </script>
 @endpush

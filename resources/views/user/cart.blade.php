@@ -66,6 +66,7 @@
                                                     @if($item['color'])
                                                         <div class="product-color d-flex align-items-center">
                                                             <span class="color-dot" style="background-color: {{ $item['color'] }}"></span>
+                                                            <span class="ms-2">{{ $item['color'] ?? '' }}</span>
                                                         </div>
                                                     @else
                                                         <span class="text-muted">N/A</span>
@@ -119,7 +120,10 @@
                                                 @if($item['color'])
                                                 <p class="mb-1 d-flex align-items-center">
                                                     <strong>اللون:</strong>&nbsp;
-                                                    <span class="color-dot ms-1" style="background-color: {{ $item['color'] }}"></span>
+                                                    <span class="color-dot ms-1 me-2" style="background-color: {{ $item['color'] }}"></span>
+                                                    @if(isset($item['color_name']) && $item['color_name'])
+                                                        <span class="color-name">{{ $item['color_name'] }}</span>
+                                                    @endif
                                                 </p>
                                                 @endif
                                             
@@ -164,7 +168,7 @@
                     <!-- Cart actions -->
                     <div class="cart-actions d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mt-4">
                         <div class="action-buttons mb-3 mb-md-0 d-flex w-100 justify-content-between gap-2 d-md-row">
-                            <a href="" class="btn btn-outline-secondary">
+                            <a href="{{ route('shop')}}" class="btn btn-outline-secondary">
                                 متابعة التسوق
                             </a>
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#clearCartModal">
@@ -191,7 +195,7 @@
                     </div>
                     <h3 class="mb-3">سلة المنتجات فارغة</h3>
                     <p class="mb-4">يبدو أنك لم تقم بإضافة أي منتجات بعد.</p>
-                    <a href="" class="btn btn-primary cancel-btn">
+                    <a href="{{ route('shop')}}" class="btn btn-primary cancel-btn">
                         <i class="fa fa-arrow-left me-2"></i>  بدء التسوق
                     </a>
                 </div>

@@ -66,13 +66,6 @@
             </div>
         </div>
 
-        <!-- ملاحظة حول الفاتورة -->
-        <div class="mb-2">
-            <small class="text-muted" style="font-size: 0.85em;">
-                <i class="bi bi-info-circle me-1"></i>
-                يتم إنشاء فاتورة الطلب تلقائياً بمجرد تحديث حالة الطلب إلى "تم الشحن".
-            </small>
-        </div>
         <!-- جدول الكوبونات -->
         @if ($orders->count())
             <div class="mt-4 table-responsive">
@@ -133,13 +126,6 @@
                                 <td>{{ $order->total_amount }} دينار</td>
                                 <td>
                                     <div class="d-flex gap-2 justify-content-start">
-                                        @if ($order->status == 'shipped' || $order->status == 'delivered')
-                                            <a href="{{ route('order.receipt', $order->id) }}"
-                                                class="btn btn-details btn-sm d-flex align-items-center gap-1">
-                                                <i class="bi bi-printer me-1"></i>
-                                                الفاتورة
-                                            </a>
-                                        @endif
                                         <a href="{{ route('admin.orders.show', $order->id) }}"
                                             class="btn btn-details btn-sm d-flex align-items-center gap-1">
                                             <i class="bi bi-eye me-1"></i>
